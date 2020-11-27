@@ -3,6 +3,9 @@ import numpy as np
 import random
 import sys
 import os
+import argparse
+
+parser = argparse.ArgumentParser()
 
 STEP = 20
 APPLE_SIZE = 20
