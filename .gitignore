@@ -1,3 +1,6 @@
 .idea/
 
 DQNetwork.py
+output/
+
+__pycache__/

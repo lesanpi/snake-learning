@@ -15,21 +15,24 @@ class DQNetwork:
         self.dropout_prob = dropout_prob
 
         self.model.add(BatchNormalization(axis = 1, input_shape = input_shape))
-        self.model.add(Conv2D(32, 2, 2))
-        self.model.add(ReLU())
+        #self.model.add(tf.keras.layers.Convolution2D(32, 2))
+        self.model.add(Convolution2D(32, (2,2)))
+        self.model.add(Activation('relu'))
 
-        self.model.add(BatchNormalization(axis=1))
-        self.model.add(Conv2D(64, 3, 3))
-        self.model.add(ReLU())
+        #self.model.add(BatchNormalization(axis=1))
+        #self.model.add(Convolution2D(64, (2,2)))
+        #self.model.add(tf.keras.layers.Convolution2D(64, 2))
+        #self.model.add(Activation('relu'))
 
-        self.model.add(BatchNormalization(axis=1))
-        self.model.add(Conv2D(64, 3, 3))
-        self.model.add(ReLU())
+        #self.model.add(BatchNormalization(axis=1))
+        #self.model.add(tf.keras.layers.Convolution2D(64, 3))
+        #self.model.add(Convolution2D(64, (3,3)))
+        #self.model.add(Activation('relu'))
         self.model.add(Flatten())
 
         self.model.add(Dropout(self.dropout_prob))
         self.model.add(Dense(512))
-        self.model.add(ReLU())
+        self.model.add(Activation('relu'))
         self.model.add(Dense(self.actions))
 
         self.optimizer = Adam()
@@ -64,12 +67,12 @@ class DQNetwork:
         h = self.model.fit(x_train,
                            t_train,
                            batch_size=32,
-                           nb_epoch=1)
+                           epochs=1)
 
         # Log loss and accuracy
         if self.logger is not None:
             self.logger.to_csv('loss_history.csv',
-                               [h.history['loss'][0], h.history['acc'][0]])
+                               [h.history['loss'][0], h.history['accuracy'][0]])
 
 
     def predict(self, state):
